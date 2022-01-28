@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+</head>
+<body>
+
+<div class="navbar navbar-expand-sm bg-dark navbar-dark" th:fragment="header (module)">
+  <div class="navbar-header">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="nav-link" th:href="@{/}">
+      <img th:src="@{/img/logo.png}" width="129" height="52" th:title="Home"/>
+    </a>
+  </div>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="nav navbar-nav">
+      <li th:classappend="${module == 'idCards' ? 'active' : ''}">
+        <a class="nav-link" th:href="@{/id-card/identity-cards}">Calendar</a>
+      </li>
+      <li th:classappend="${module == 'person' ? 'active' : ''}">
+        <a class="nav-link" th:href="@{/person}">Persons</a>
+      </li>
+      <li th:classappend="${module == 'studyGroup' ? 'active' : ''}">
+        <a class="nav-link" th:href="@{/studyGroup}">Study Groups</a>
+      </li>
+      <li sec:authorize ="!isAuthenticated()" th:classappend="${module == 'login' ? 'active' : ''}">
+        <a class="nav-link" th:href="@{/login}">Login</a>
+      </li>
+      <li sec:authorize ="isAuthenticated()" th:classappend="${module == 'logout' ? 'active' : ''}">
+        <a class="nav-link"  th:href="@{/logout}">Log Out</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+</body>
+</html>

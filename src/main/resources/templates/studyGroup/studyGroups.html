@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+  <title>Manager Role Directory</title>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div th:replace="fragments/header :: header('studyGroup')" />
+
+  <h3>Study Group's info</h3>
+  <hr>
+
+  <!-- Add a button -->
+  <a th:href="@{/studyGroup/showFormForStudyGroupAdd}"
+     class="btn btn-primary btn-sm mb-3">
+    Add Study Group
+  </a>
+
+
+  <table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+    <tr>
+      <th>Group Name</th>
+      <th>People Count</th>
+      <th>Course Number</th>
+      <th>Action</th>
+      <th>Persons in group</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="group : ${studyGroupList}">
+
+      <td th:text="${group.groupName}" />
+      <td th:text="${group.peopleCount}" />
+      <td th:text="${group.courseNumber}" />
+      <td>
+        <div class="row">
+
+          <div class="col-small">
+            <form action="#" th:action="@{/studyGroup/showFormForStudyGroupUpdate}" method="POST">
+
+              <input type="hidden" name="groupId" th:value="${group.groupId}" />
+              <button type="submit" class="btn btn-info btn-sm">Edit</button>
+
+            </form>
+          </div>
+
+          <div class="col-small">
+            <form action="#" th:action="@{/studyGroup/deleteStudyGroup}" method="POST">
+
+              <input type="hidden" name="groupId" th:value="${group.groupId}" />
+              <button type="submit" class="btn btn-danger btn-sm"
+                      onclick="if (!(confirm('Are you sure you want to delete this group?'))) return false">
+                Delete
+              </button>
+
+            </form>
+          </div>
+        </div>
+      </td>
+
+      <td>
+        <div th:unless="${#lists.isEmpty(group.getPersonList())}" th:each="person : ${group.getPersonList()}">
+          <p>
+            <span th:text="${person.getFirstName()}" />
+          </p>
+        </div>
+        <div th:if="${#lists.isEmpty(group.getPersonList())}">
+          <p>
+            <span th:text="'no persons here :('" />
+          </p>
+        </div>
+      </td>
+
+    </tr>
+    </tbody>
+  </table>
+  <nav aria-label="Pagination"  th:if="${studyGroupList.totalPages gt 0}">
+    <ul class="pagination justify-content-center font-weight-bold">
+      <li class="page-item" th:classappend="${studyGroupList.number eq 0} ? 'disabled'">
+        <a class="page-link"
+           th:href="@{/studyGroup?page={id}(id=${studyGroupList.number lt 2 ? 1 : studyGroupList.number})}"
+           aria-label="Previous" title="Previous Page" data-toggle="tooltip">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li class="page-item disabled" th:if="${studyGroupList.number > 4 }">
+        <a class="page-link svg-icon" href="#">
+          <span data-feather="more-horizontal" width="20" height="20"></span>
+        </a>
+      </li>
+      <li class="page-item" th:classappend="${i eq studyGroupList.number + 1} ? 'active'"
+          th:each="i : ${#numbers.sequence( studyGroupList.number < 5 ? 1 : studyGroupList.number - 3, studyGroupList.totalPages > 5 + studyGroupList.number ? studyGroupList.number + 5 : studyGroupList.totalPages, 1)}">
+        <a class="page-link" th:href="@{/studyGroup?page={id}(id=${i})}" th:text="${i}"
+           th:title="${'Page '+ i}" data-toggle="tooltip"></a>
+      </li>
+      <li class="page-item disabled" th:if="${studyGroupList.number + 5 < studyGroupList.totalPages}">
+        <a class="page-link svg-icon" href="#">
+          <span data-feather="more-horizontal" width="20" height="20"></span>
+        </a>
+      </li>
+      <li class="page-item" th:classappend="${studyGroupList.number + 1 eq studyGroupList.totalPages} ? 'disabled'">
+        <a class="page-link svg-icon"
+           th:href="@{/studyGroup?page={id}(id=${studyGroupList.number + 2})}"
+           aria-label="Next" title="Next Page" data-toggle="tooltip">
+          <span aria-hidden="true" data-feather="chevrons-right" width="20" height="20">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+<div th:replace="fragments/footer :: footer" />
+</body>
+</html>
