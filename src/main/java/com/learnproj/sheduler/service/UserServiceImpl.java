@@ -1,7 +1,6 @@
 package com.learnproj.sheduler.service;
 
 
-import com.learnproj.sheduler.model.ERole;
 import com.learnproj.sheduler.model.User;
 import com.learnproj.sheduler.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +9,6 @@ import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 
 

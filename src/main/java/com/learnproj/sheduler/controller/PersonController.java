@@ -33,7 +33,7 @@ public class PersonController {
         this.studyGroupService = studyGroupService;
     }
 
-   // @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasRole('USER') or hasRole('MANAGER') or hasRole('ADMIN')")
     @GetMapping("")
     public String getPersons(HttpServletRequest request, Model theModel){
         int page = 0; //default page number
@@ -50,7 +50,7 @@ public class PersonController {
         theModel.addAttribute("personsList", personsList);
         return "/person/person";
     }
-    @PreAuthorize("hasRole('ADMIN') and hasRole('MANAGER')")
+    @PreAuthorize("hasRole('USER') or hasRole('MANAGER') or hasRole('ADMIN')")
     @PostMapping("/deletePerson")
     public String deletePerson(@RequestParam("personId") int personId) {
         personService.deleteById(personId);

@@ -1,39 +1,28 @@
 package com.learnproj.sheduler.model;
 
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import javax.persistence.*;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-@Entity
-public class Role {
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Integer id;
+public enum Role {
+    USER(Set.of(Permission.ALL_READ)),
+    ADMIN(Set.of(Permission.ALL_READ, Permission.ALL_WRITE)),
+    MANAGER(Set.of(Permission.ALL_READ, Permission.MANAGER_WRITE));
 
-        @Enumerated(EnumType.STRING)
-        @Column(length = 20)
-        private ERole name;
+    private final Set<Permission> permissions;
 
-        public Role() {
-        }
+    Role(Set<Permission> permissions) {
+        this.permissions = permissions;
+    }
 
-        public Role(ERole name) {
-            this.name = name;
-        }
+    public Set<Permission> getPermissions() {
+        return permissions;
+    }
 
-        public Integer getId() {
-            return id;
-        }
-
-        public void setId(Integer id) {
-            this.id = id;
-        }
-
-        public ERole getName() {
-            return name;
-        }
-
-        public void setName(ERole name) {
-            this.name = name;
-        }
+    public Set<SimpleGrantedAuthority> getAuthorities() {
+        return getPermissions().stream()
+                .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
+                .collect(Collectors.toSet());
+    }
 }
-
