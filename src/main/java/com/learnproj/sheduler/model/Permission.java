@@ -2,8 +2,8 @@ package com.learnproj.sheduler.model;
 
 public enum Permission {
     ALL_READ("all:read"),
-    ALL_WRITE("admin:write"),
-    MANAGER_WRITE("manager:write");
+    ADMIN_WRITE("admin:write"),
+    ALL_WRITE("all:write");
 
 
 

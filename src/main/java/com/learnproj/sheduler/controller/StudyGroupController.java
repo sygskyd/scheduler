@@ -29,7 +29,7 @@ public class StudyGroupController {
         this.personService = personService;
     }
 
-    //@PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('all:read')")
     @GetMapping("")
     public String getAllGroups(HttpServletRequest request, Model model) {
         int page = 0; //default page number
@@ -48,7 +48,7 @@ public class StudyGroupController {
         return "studyGroup/studyGroups";
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('all:write')")
     @GetMapping("/showFormForStudyGroupAdd")
     public String showAddStudyGroupForm(Model model){
         model.addAttribute("studyGroup",new StudyGroup());
@@ -64,21 +64,21 @@ public class StudyGroupController {
 //        return "/studyGroup/studyGroups";
 //    }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('all:write')")
     @PostMapping("/saveStudyGroup")
     public String saveStudyGroup(@ModelAttribute("studyGroup") @Valid StudyGroup studyGroup){
         studyGroupService.save(studyGroup);
         return "redirect:/studyGroup";
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('all:write')")
     @GetMapping("/showFormForStudyGroupUpdate")
     public String getForPostEditStudyGroup(@RequestParam("groupId") @Valid int groupId, Model model){
         model.addAttribute("client",studyGroupService.findById(groupId));
         return "studyGroup/studyGroupForm";
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('all:write')")
     @PostMapping("/showFormForStudyGroupUpdate")
     public String showFormForEditStudyGroup(@RequestParam("groupId") @Valid int groupId, Model model) {
         StudyGroup studyGroup = studyGroupService.findById(groupId);
@@ -87,7 +87,7 @@ public class StudyGroupController {
         return "studyGroup/studyGroupForm";
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('admin:write')")
     @PostMapping("/deleteStudyGroup")
     public String deleteStudyGroup(@RequestParam("groupId") @Valid int groupId) {
         studyGroupService.deleteById(groupId);

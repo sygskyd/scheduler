@@ -1,8 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8"/>
-    <link rel="stylesheet" type="text/css" href="../../statics/css/login.css" th:href="@{/statics/css/login.css}"/>
-    <link rel="stylesheet" type="text/css" href="../../statics/css/main.css" th:href="@{/statics/css/main.css}" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <title>logIn</title>
@@ -13,7 +11,7 @@
   </head>
   <body class="container">
   <div th:replace="fragments/header :: header('clients')" />
-    <form th:action="@{/login}" th:object="${user}" method="POST" class="form-signin">
+    <form th:action="@{/auth}" th:object="${user}" method="POST" class="form-signin">
       <div th:if="${error}" class="alert alert-danger">
         <strong>?!?!?</strong> <div>Try another Username or Password</div>
       </div>

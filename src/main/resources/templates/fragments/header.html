@@ -26,8 +26,8 @@
       <li th:classappend="${module == 'studyGroup' ? 'active' : ''}">
         <a class="nav-link" th:href="@{/studyGroup}">Study Groups</a>
       </li>
-      <li sec:authorize ="!isAuthenticated()" th:classappend="${module == 'login' ? 'active' : ''}">
-        <a class="nav-link" th:href="@{/login}">Login</a>
+      <li sec:authorize ="!isAuthenticated()" th:classappend="${module == 'auth' ? 'active' : ''}">
+        <a class="nav-link" th:href="@{/auth}">Login</a>
       </li>
       <li sec:authorize ="isAuthenticated()" th:classappend="${module == 'logout' ? 'active' : ''}">
         <a class="nav-link"  th:href="@{/logout}">Log Out</a>

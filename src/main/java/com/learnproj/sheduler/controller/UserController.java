@@ -23,7 +23,7 @@ public class UserController {
     @Autowired
     PasswordEncoder encoder;
 
-    @GetMapping("/login")
+    @GetMapping("/auth")
     public String signInPage(Model theModel, String error, String logout) {
         if (error != null) {
             theModel.addAttribute("error", true);

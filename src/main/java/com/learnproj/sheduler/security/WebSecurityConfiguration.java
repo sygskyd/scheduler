@@ -18,6 +18,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -47,17 +48,18 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .antMatchers(HttpMethod.GET, "/person/**").authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login").permitAll()
+                .loginPage("/auth").permitAll()
                 .defaultSuccessUrl("/")
-                .failureForwardUrl("/login?error=true")
+                .failureForwardUrl("/auth?error=true")
                 .and()
                 .logout()
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .deleteCookies("JSESSIONID")
-                .logoutSuccessUrl("/login?logout=true")
+                .logoutSuccessUrl("/auth?logout=true")
                 .and()
-                .exceptionHandling().accessDeniedPage("/access-denied")
+                .exceptionHandling().accessDeniedHandler(accessDeniedHandler())
+
 //                .and()
 //                .rememberMe()
                 .and()
@@ -69,11 +71,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     //If custom authenticationProvider (DaoAuthenticationProvider here)
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(daoAuthenticationProvider());
     }
 
-   @Bean
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
@@ -84,6 +86,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
         daoAuthenticationProvider.setUserDetailsService(userDetailsService);
         return daoAuthenticationProvider;
+    }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new CustomAccessDeniedHandler();
     }
 
 /*    @Bean

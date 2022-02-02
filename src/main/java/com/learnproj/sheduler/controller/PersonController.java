@@ -33,7 +33,7 @@ public class PersonController {
         this.studyGroupService = studyGroupService;
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MANAGER') or hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('all:read')")
     @GetMapping("")
     public String getPersons(HttpServletRequest request, Model theModel){
         int page = 0; //default page number
@@ -50,14 +50,14 @@ public class PersonController {
         theModel.addAttribute("personsList", personsList);
         return "/person/person";
     }
-    @PreAuthorize("hasRole('USER') or hasRole('MANAGER') or hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('admin:write')")
     @PostMapping("/deletePerson")
     public String deletePerson(@RequestParam("personId") int personId) {
         personService.deleteById(personId);
         return "redirect:/person";
     }
 
-    @PreAuthorize("hasRole('ADMIN') and hasRole('MANAGER')")
+    @PreAuthorize("hasAuthority('all:write')")
     @GetMapping("/showFormForPersonAdd")
     public String showAddPersonForm (Model theModel){
         Person person = new Person();
@@ -67,7 +67,7 @@ public class PersonController {
         return "/person/personForm";
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('all:write')")
     @PostMapping("/showFormForPersonUpdate")
     public String showFormForPersonUpdate(@RequestParam("personId") int personId, Model theModel) {
         Person person = personService.findById(personId);
@@ -79,7 +79,7 @@ public class PersonController {
         return "/person/personForm";
     }
 
-    @PreAuthorize("hasRole('ADMIN') and hasRole('MANAGER')")
+    @PreAuthorize("hasAuthority('all:write')")
     @PostMapping("/savePerson")
     public String savePerson(@ModelAttribute("person") @Valid Person person, BindingResult result){
         if (result.hasErrors()) {
