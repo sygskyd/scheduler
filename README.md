@@ -1,2 +1,2 @@
 # scheduler
-spring boot, security, JWT, JPA
+spring boot, security, JPA, Thymeleaf, JS FullCalendar
