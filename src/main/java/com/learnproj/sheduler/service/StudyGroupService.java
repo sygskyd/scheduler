@@ -13,6 +13,8 @@ public interface StudyGroupService {
 
     StudyGroup findById(int theId);
 
+    StudyGroup findByGroupName(String groupName);
+
     void save(StudyGroup studyGroup);
 
     void deleteById(int theId);

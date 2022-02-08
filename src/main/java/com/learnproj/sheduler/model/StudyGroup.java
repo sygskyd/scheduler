@@ -1,5 +1,7 @@
 package com.learnproj.sheduler.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,8 +13,9 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(exclude="personList")
-@ToString(exclude = "personList")
+@EqualsAndHashCode(exclude= {"personList", "eventList"})
+@ToString(exclude = {"personList", "eventList"})
+@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="groupId")
 @Entity
 @Table(name = "STUDY_GROUP")
 public class StudyGroup {
@@ -36,5 +39,8 @@ public class StudyGroup {
 
     @OneToMany(mappedBy = "studyGroup", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Person> personList;
+
+    @OneToMany(mappedBy = "studyGroup", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Event> eventList;
 
 }

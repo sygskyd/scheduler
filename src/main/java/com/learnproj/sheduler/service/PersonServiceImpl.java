@@ -2,6 +2,7 @@ package com.learnproj.sheduler.service;
 
 import com.learnproj.sheduler.model.Person;
 import com.learnproj.sheduler.repository.PersonRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ public class PersonServiceImpl implements PersonService {
 
     private PersonRepository personRepository;
 
+    @Autowired
     public PersonServiceImpl(PersonRepository personRepository) {
         this.personRepository = personRepository;
     }
