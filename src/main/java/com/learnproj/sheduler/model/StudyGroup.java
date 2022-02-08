@@ -34,9 +34,6 @@ public class StudyGroup {
     @Column(name = "COURSE_NUMBER")
     private int courseNumber;
 
-    @ManyToMany(mappedBy = "groupList")
-    private List<CalendarDate> calendarDateList;
-
     @OneToMany(mappedBy = "studyGroup", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Person> personList;
 

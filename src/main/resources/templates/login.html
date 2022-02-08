@@ -10,7 +10,7 @@
     <title>Hello user</title>
   </head>
   <body class="container">
-  <div th:replace="fragments/header :: header('clients')" />
+  <div th:replace="fragments/header :: header('login')" />
     <form th:action="@{/auth}" th:object="${user}" method="POST" class="form-signin">
       <div th:if="${error}" class="alert alert-danger">
         <strong>?!?!?</strong> <div>Try another Username or Password</div>
