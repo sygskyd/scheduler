@@ -7,16 +7,13 @@ import java.util.List;
 
 public interface UserService {
 
-    @Transactional
+
     boolean userExists(String username);
 
-    @Transactional
     void save(User user);
 
-    @Transactional
     User get(Long id);
 
-    @Transactional
     List<User> getList();
 
     boolean existsByUsername(String username);
